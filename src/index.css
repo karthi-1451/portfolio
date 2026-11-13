@@ -1,0 +1,327 @@
+@import "tailwindcss";
+
+/* ============ VARIABLES ============ */
+:root {
+  --bg: #050505;
+  --bg-2: #09090b;
+  --navy: #0a1128;
+  --navy-deep: #08111e;
+  --graphite: #111111;
+  --charcoal: #181818;
+  --card: rgba(255, 255, 255, 0.035);
+  --card-solid: #101014;
+  --border: rgba(255, 255, 255, 0.09);
+  --border-strong: rgba(255, 255, 255, 0.16);
+  --text: #ececec;
+  --text-dim: #9a9a9f;
+  --accent: #ecb914;
+  --accent-soft: #f6d579;
+  --lava: #c9110b;
+  --glow: rgba(236, 185, 20, 0.22);
+  --grid: rgba(255, 255, 255, 0.045);
+  --shadow: 0 30px 80px -30px rgba(0, 0, 0, 0.9);
+}
+
+html.light {
+  /* ===== BACKGROUNDS ===== */
+
+  --bg: #e8ddcc;
+
+  --bg-2: #f1e8db;
+
+  --navy: #d8c5ad;
+
+  --navy-deep: #cdb79c;
+
+  --graphite: #e2d2be;
+
+  --charcoal: #d5bea4;
+
+  /* ===== GLASS / CARDS ===== */
+
+  --card: rgba(255, 248, 240, 0.58);
+
+  --card-solid: #f7efe5;
+
+  /* ===== BORDERS ===== */
+
+  --border: rgba(92, 62, 38, 0.16);
+
+  --border-strong: rgba(92, 62, 38, 0.3);
+
+  /* ===== TEXT ===== */
+
+  --text: #2e2118;
+
+  --text-dim: #765c47;
+
+  /* ===== ACCENT ===== */
+
+  --accent: #7a4e2d;
+
+  --accent-soft: #cf8e5c;
+
+  --lava: #9e3d24;
+
+  /* ===== EFFECTS ===== */
+
+  --glow: rgba(122, 78, 45, 0.5);
+
+  --grid: rgba(92, 62, 38, 0.08);
+
+  --shadow: 0 30px 70px -35px rgba(74, 48, 30, 0.32);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scrollbar-width: thin;
+  scrollbar-color: var(--accent) transparent;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: "DM Mono", ui-monospace, monospace;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+  transition:
+    background-color 520ms cubic-bezier(0.65, 0, 0.35, 1),
+    color 520ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+.theme-anim,
+.theme-anim * {
+  transition:
+    background-color 520ms cubic-bezier(0.65, 0, 0.35, 1),
+    border-color 520ms cubic-bezier(0.65, 0, 0.35, 1),
+    color 520ms cubic-bezier(0.65, 0, 0.35, 1),
+    fill 520ms,
+    box-shadow 520ms !important;
+}
+
+::selection {
+  background: var(--accent);
+  color: var(--bg);
+}
+
+.font-syne {
+  font-family: "Syne", sans-serif;
+}
+.font-mono2 {
+  font-family: "DM Mono", monospace;
+}
+.font-serif2 {
+  font-family: "Instrument Serif", serif;
+}
+
+/* ============ UTILITIES ============ */
+.glass {
+  background: var(--card);
+  backdrop-filter: blur(22px) saturate(150%);
+  -webkit-backdrop-filter: blur(22px) saturate(150%);
+  border: 1px solid var(--border);
+  box-shadow:
+    0 12px 35px rgba(74, 48, 30, 0.08),
+    inset 0 1px 0 rgba(255, 255, 255, 0.45);
+}
+
+.grid-bg {
+  background-image:
+    linear-gradient(to right, var(--grid) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--grid) 1px, transparent 1px);
+  background-size: 64px 64px;
+  mask-image: radial-gradient(
+    ellipse 80% 60% at 50% 40%,
+    #000 30%,
+    transparent 100%
+  );
+}
+
+.noise::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  opacity: 0.035;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+.gradient-text {
+  background: linear-gradient(
+    105deg,
+    var(--text) 12%,
+    var(--accent) 50%,
+    var(--text) 88%
+  );
+  background-size: 220% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+.shimmer:hover .gradient-text {
+  animation: shimmer 1.5s ease-in-out infinite alternate;
+}
+@keyframes shimmer {
+  from {
+    background-position: 140% 0;
+  }
+  to {
+    background-position: -60% 0;
+  }
+}
+
+.divider {
+  height: 1px;
+  width: 100%;
+  background: linear-gradient(
+    90deg,
+    transparent,
+    var(--border-strong) 20%,
+    var(--accent) 50%,
+    var(--border-strong) 80%,
+    transparent
+  );
+  opacity: 0.55;
+}
+
+.gradient-border {
+  position: relative;
+}
+.gradient-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  padding: 1.5px;
+
+  background: linear-gradient(
+    140deg,
+    var(--accent),
+    var(--accent-soft) 35%,
+    transparent 55%,
+    var(--lava)
+  );
+
+  -webkit-mask:
+    linear-gradient(#000 0 0) content-box,
+    linear-gradient(#000 0 0);
+
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+
+  opacity: 0;
+  transition: opacity 450ms ease;
+  pointer-events: none;
+}
+.gradient-border:hover::before {
+  opacity: 1;
+}
+
+.blob {
+  position: absolute;
+  border-radius: 50%;
+  filter: blur(90px);
+  pointer-events: none;
+}
+
+@keyframes float-y {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-22px);
+  }
+}
+.float {
+  animation: float-y 9s ease-in-out infinite;
+}
+
+@keyframes drift {
+  0% {
+    transform: translate(0, 0) scale(1);
+  }
+  33% {
+    transform: translate(6%, -8%) scale(1.12);
+  }
+  66% {
+    transform: translate(-7%, 5%) scale(0.94);
+  }
+  100% {
+    transform: translate(0, 0) scale(1);
+  }
+}
+.drift {
+  animation: drift 26s ease-in-out infinite;
+}
+
+@keyframes caret {
+  0%,
+  49% {
+    opacity: 1;
+  }
+  50%,
+  100% {
+    opacity: 0;
+  }
+}
+.caret {
+  animation: caret 1s steps(1) infinite;
+}
+
+@keyframes spin-slow {
+  to {
+    transform: rotate(360deg);
+  }
+}
+.spin-slow {
+  animation: spin-slow 26s linear infinite;
+}
+
+.link-underline {
+  position: relative;
+}
+.link-underline::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -3px;
+  height: 1px;
+  width: 100%;
+  background: var(--accent);
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 420ms cubic-bezier(0.65, 0, 0.35, 1);
+}
+.link-underline:hover::after {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+  border-radius: 6px;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .cursor-none-desktop,
+  .cursor-none-desktop * {
+    cursor: none !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
